@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriVida | Nutrición Integral y Sostenible</title>
+    <style>
+        :root {
+            --verde-primario: #27ae60;
+            --verde-claro: #dff9fb;
+            --acento: #f39c12;
+            --oscuro: #2c3e50;
+            --texto: #555;
+            --blanco: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--texto);
+            scroll-behavior: smooth;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        header {
+            background: var(--blanco);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--verde-primario); text-decoration: none; }
+        
+        nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: var(--oscuro);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--verde-primario); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; max-width: 800px; }
+
+        /* --- SECCIONES GENERALES --- */
+        section { padding: 5rem 10%; }
+        h2 { text-align: center; color: var(--verde-primario); font-size: 2.5rem; margin-bottom: 3rem; position: relative; }
+        h2::after { content: ''; width: 80px; height: 4px; background: var(--acento); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        /* --- QUIÉNES SOMOS E HISTORIA --- */
+        .historia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .historia-img img { width: 100%; border-radius: 15px; box-shadow: 15px 15px 0 var(--verde-claro); }
+
+        /* --- PROPUESTA DE VALOR --- */
+        .propuesta { background: var(--verde-claro); }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .card-valor { background: white; padding: 2rem; border-radius: 10px; text-align: center; transition: 0.3s; }
+        .card-valor:hover { transform: translateY(-10px); }
+        .icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        /* --- FILOSOFÍA (Misión, Visión, Valores) --- */
+        .filosofia { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .filosofia-item { border-left: 5px solid var(--verde-primario); padding-left: 1.5rem; }
+
+        /* --- PRODUCTOS --- */
+        .producto-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .producto-img { width: 100%; height: 200px; object-fit: cover; }
+        .producto-body { padding: 1.5rem; }
+        .precio { color: var(--verde-primario); font-weight: bold; font-size: 1.3rem; }
+        .btn-comprar { background: var(--verde-primario); color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 5px; cursor: pointer; margin-top: 1rem; width: 100%; font-weight: bold; }
+
+        /* --- POLÍTICAS --- */
+        .politicas { background: #fdfdfd; }
+        .acordeon { background: white; border: 1px solid #eee; margin-bottom: 10px; padding: 1rem; border-radius: 5px; }
+
+        /* --- CHATBOT --- */
+        #chat-btn { position: fixed; bottom: 30px; right: 30px; background: var(--verde-primario); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 2000; font-size: 1.5rem; }
+        
+        #chat-window { position: fixed; bottom: 100px; right: 30px; width: 320px; height: 450px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 2000; overflow: hidden; }
+        
+        .chat-header { background: var(--verde-primario); color: white; padding: 1rem; font-weight: bold; }
+        .chat-messages { flex: 1; padding: 1rem; overflow-y: auto; font-size: 0.9rem; }
+        .chat-input { display: flex; border-top: 1px solid #eee; }
+        .chat-input input { flex: 1; border: none; padding: 1rem; outline: none; }
+        .chat-input button { background: var(--verde-primario); color: white; border: none; padding: 0 1rem; cursor: pointer; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--oscuro); color: white; padding: 4rem 10% 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+        .footer-bottom { text-align: center; margin-top: 3rem; border-top: 1px solid #444; padding-top: 2rem; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo">NutriVida🥗</a>
+    <nav>
+        <a href="#historia">Quiénes Somos</a>
+        <a href="#propuesta">Propuesta</a>
+        <a href="#filosofia">Filosofía</a>
+        <a href="#menu">Menú</a>
+        <a href="#politicas">Políticas</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Nutrición que Inspira Tu Vida</h1>
+    <p>Somos más que una empresa de comida; somos tu aliado en la búsqueda de un bienestar integral a través de alimentos honestos, deliciosos y sostenibles.</p>
+</section>
+
+<section id="historia">
+    <div class="historia-grid">
+        <div class="historia-img">
+            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Comida Saludable">
+        </div>
+        <div>
+            <h2>Nuestra Historia</h2>
+            <p><strong>NutriVida</strong> nació en 2021 bajo la visión de la Dra. Elena Ramos, quien tras años de consulta nutricional entendió que la principal barrera para comer sano era la falta de tiempo y opciones sabrosas en el mercado.</p>
+            <p>Lo que comenzó como un pequeño taller de "meal prep" en casa, hoy es una planta procesadora de alta tecnología que sirve a miles de personas diariamente, manteniendo siempre el toque artesanal y el respeto por el ingrediente.</p>
+        </div>
+    </div>
+</section>
+
+<section id="propuesta" class="propuesta">
+    <h2>Nuestra Propuesta de Valor</h2>
+    <div class="grid-3">
+        <div class="card-valor">
+            <span class="icon">🔬</span>
+            <h3>Base Científica</h3>
+            <p>Cada receta está diseñada por nutricionistas para garantizar un balance real de macronutrientes.</p>
+        </div>
+        <div class="card-valor">
+            <span class="icon">🌱</span>
+            <h3>Ingredientes Vivos</h3>
+            <p>Usamos vegetales orgánicos cosechados menos de 24 horas antes de llegar a tu plato.</p>
+        </div>
+        <div class="card-valor">
+            <span class="icon">📦</span>
+            <h3>Sostenibilidad Real</h3>
+            <p>Empaques de fécula de maíz compostables y logística con huella de carbono neutralizada.</p>
+        </div>
+    </div>
+</section>
+
+<section id="filosofia">
+    <h2>Filosofía Corporativa</h2>
+    <div class="filosofia">
+        <div class="filosofia-item">
+            <h3>Misión</h3>
+            <p>Democratizar el acceso a una alimentación premium y saludable, eliminando la idea de que comer bien es aburrido o costoso.</p>
+        </div>
+        <div class="filosofia-item">
+            <h3>Visión</h3>
+            <p>Ser la marca referente de bienestar en Latinoamérica para el 2030, integrando tecnología y nutrición en cada hogar.</p>
+        </div>
+        <div class="filosofia-item">
+            <h3>Valores</h3>
+            <ul>
+                <li><strong>Transparencia:</strong> Etiquetado claro sin letras pequeñas.</li>
+                <li><strong>Innovación:</strong> Mejora constante de procesos.</li>
+                <li><strong>Comunidad:</strong> Apoyo directo a agricultores locales.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="menu">
+    <h2>Menú de Temporada</h2>
+    <div class="grid-3">
+        <div class="producto-card">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=400&q=80" class="producto-img" alt="Ensalada">
+            <div class="producto-body">
+                <h3>Bowl Rainbow Thai</h3>
+                <p>Edamames, zanahoria morada, tofu marinado y aderezo de cacahuate.</p>
+                <span class="precio">$11.00</span>
+                <button class="btn-comprar">Pedir Ahora</button>
+            </div>
+        </div>
+        <div class="producto-card">
+            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=400&q=80" class="producto-img" alt="Salmón">
+            <div class="producto-body">
+                <h3>Salmón al Grill</h3>
+                <p>Acompañado de espárragos al vapor y arroz de coliflor al limón.</p>
+                <span class="precio">$17.50</span>
+                <button class="btn-comprar">Pedir Ahora</button>
+            </div>
+        </div>
+        <div class="producto-card">
+            <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=400&q=80" class="producto-img" alt="Jugo">
+            <div class="producto-body">
+                <h3>Jugo Verde Detox</h3>
+                <p>Espinaca, manzana verde, jengibre y apio orgánico prensado en frío.</p>
+                <span class="precio">$5.50</span>
+                <button class="btn-comprar">Pedir Ahora</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="politicas" class="politicas">
+    <h2>Políticas de Empresa</h2>
+    <div class="acordeon">
+        <h4>🔐 Política de Privacidad</h4>
+        <p>Tus datos son sagrados. Nunca compartiremos tu información con terceros y solo la usamos para enviarte tus pedidos y beneficios exclusivos.</p>
+    </div>
+    <div class="acordeon">
+        <h4>✅ Política de Calidad</h4>
+        <p>Certificados por normas internacionales de higiene. Si el producto no llega en condiciones óptimas, se reembolsa el 100% de la compra.</p>
+    </div>
+    <div class="acordeon">
+        <h4>🤝 Política de Proveedores</h4>
+        <p>Priorizamos el comercio justo. El 80% de nuestros insumos provienen de familias agricultoras en un radio de 100km.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h3>NutriVida</h3>
+            <p>Alimentación consciente para gente extraordinaria.</p>
+        </div>
+        <div>
+            <h4>Explora</h4>
+            <nav style="display: flex; flex-direction: column;">
+                <a href="#historia" style="color: white; margin-bottom: 5px;">Historia</a>
+                <a href="#menu" style="color: white; margin-bottom: 5px;">Menú</a>
+                <a href="#politicas" style="color: white; margin-bottom: 5px;">Privacidad</a>
+            </nav>
+        </div>
+        <div>
+            <h4>Contacto</h4>
+            <p>📍 Calle Verde 777, Zona Wellness</p>
+            <p>📞 +123 456 789</p>
+            <p>✉️ hola@nutrivida.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 NutriVida S.A. | Todos los derechos reservados.
+    </div>
+</footer>
+
+<div id="chat-btn" onclick="toggleChat()">💬</div>
+
+<div id="chat-window" id="chatWindow">
+    <div class="chat-header">Asistente NutriBot 🤖</div>
+    <div class="chat-messages" id="chatMsgs">
+        <div><strong>Bot:</strong> ¡Hola! Soy NutriBot. ¿En qué puedo ayudarte hoy? Prueba preguntando por el "menú", "precios" o nuestra "historia".</div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
+        <button onclick="handleChat()">Enviar</button>
+    </div>
+</div>
+
+<script>
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function handleChat() {
+        const input = document.getElementById('userInput');
+        const msgs = document.getElementById('chatMsgs');
+        const text = input.value.trim().toLowerCase();
+
+        if (text === "") return;
+
+        // Mostrar mensaje usuario
+        msgs.innerHTML += `<div style="text-align:right; margin: 10px 0;"><strong>Tú:</strong> ${input.value}</div>`;
+        input.value = "";
+
+        // Lógica de respuesta
+        setTimeout(() => {
+            let reply = "Lo siento, no entiendo. ¿Podrías intentar con palabras clave como 'menú' o 'precios'?";
+            
+            if(text.includes("hola") || text.includes("buenos días")) reply = "¡Hola! Es un gusto saludarte. ¿Lista/o para comer sano hoy?";
+            if(text.includes("menú") || text.includes("platos")) reply = "Hoy tenemos el Bowl Rainbow Thai ($11), Salmón al Grill ($17.50) y Jugo Detox ($5.50).";
+            if(text.includes("precio")) reply = "Nuestros precios son variados: desde $5.50 en bebidas hasta $17.50 en platos fuertes gourmet.";
+            if(text.includes("historia") || text.includes("quienes somos")) reply = "Fuimos fundados en 2021 por la Dra. Elena Ramos para llevar salud a tu mesa de forma rápida.";
+            if(text.includes("misión")) reply = "Nuestra misión es democratizar la comida saludable y premium para todos.";
+
+            msgs.innerHTML += `<div style="margin: 10px 0;"><strong>Bot:</strong> ${reply}</div>`;
+            msgs.scrollTop = msgs.scrollHeight;
+        }, 600);
+    }
+
+    // Soporte para tecla Enter
+    document.getElementById('userInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleChat();
+    });
+</script>
+
+</body>
+</html>
